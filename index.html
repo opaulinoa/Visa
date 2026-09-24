@@ -183,28 +183,32 @@ var LLAVE_R = "visa-respuestas-v2";
 var LLAVE_P = "visa-previos-v2";
 var pre = {}, resp = {};
 
-function leerHash(){
-  var h = (window.location.hash || "").replace(/^#/, "");
-  if (h.indexOf("d=") === 0) h = h.slice(2);
-  if (!h) return null;
-  try {
-    var b64 = h.replace(/-/g, "+").replace(/_/g, "/");
-    while (b64.length % 4) b64 += "=";
-    var bin = atob(b64);
-    var bytes = new Uint8Array(bin.length);
-    for (var n = 0; n < bin.length; n++) bytes[n] = bin.charCodeAt(n);
-    return JSON.parse(new TextDecoder("utf-8").decode(bytes));
-  } catch(e){ return null; }
+var CIFRADO = "MMcXV1+ytjzMHaJ+6qA0isWNkhkaHuEbo4k4LOPCHtrGOQRzgIoRirO05s+jbL/hH0f/rQvOuad7Lxti9EzxpfvnJXoAulDVqS78voArmKikzGOiaGhWc9IcKWu30iJ6JWz4CHZutDcxLotAkYcMItaITpEozgWbjzex79A0RKUOvkfdh+tbpze8K0Xpr18s28pdKvU+PrzsMHj6e1mHCv/GWCsLG6oMter224FuNTmBeAb/0iybTFyeZu2ZYywn0H+8XcsWsyDXiaWPmlS9XBLw8w1KTOREHsHR1xBsZW5kKUcZhuQGQA3jiVMaZkhJV5UX2FZFULwaA7fD3Boh02JgDkhC09IQZGuNH1YGVLbn5uU7KJxlHPljD8RPIx+e5u4ZEW2QbRE3giWETI7FoK5qOYSepTDbRUlZL6xouarffZ463GPWTVL34NaIfLTcsRYe97HsHGW4QeaOy4s90PS+EbzpP1i+C2eGvMeGbqMuoeHrHGn7ejBOWzCd2EyFQqpRQPY3RrVrkfEnxt7ftFYcE1aO+V3vOC52Q0m7FwvnmPtV5eLsu1pGRlSxIVRlLvwgiO39HdTxPssT/jWqw2dSPBGiGPaIiTkAn5SSQ1Y5mezy2R74HGTj1JHrZdgcimJG4KoBwgL4e0H7GHJx45Xat277rqLIWi5i/xpYZZIaScrTCQyf7YM6QNynQJ+ie6Sj+j5aJXuqSv7Bz5BMeRZR9oSKNnlmk3LRHJFMcDZI2LXykhZzKS5YNXLR+S2pSNE+qDyyVPtYm+MPotS+aO8GdYZDbEAqC7VdizOIctV4BjtAvThRRIyDpq3Pkk+5c5deuCrZQE5kPgU7ykJouH0ZoHuY/0CxZD/fhMt1isBE2mixqrXbFdng1H6MLgwLE0u+25f1qpJEjhOgVECTSpDMeUwlBlG2hWAd6f9sid1kzSzoOaFsuxOdf0nkwS2TXy0W7BBl/hdycxESWS3dB2hQxztXoY+0iNd4iR+99ta+Kk3xJdv2HzeAXarYx5K/rypeSMJtCx+ouo1pmuSnqnr2nU4xOTiIe0qimbbFTKOCTJex6sv9RCs45w0FBTYUWb4LY1mTJYCck4APj2u90zk0OAqIM5q3G5/tlBBkCHAbPxDbHR0hU2YGbPmEF9xC2iEZK4bYK9kWhmjD/Lz7PUBtRMHkCfzxQBhIpdnCYzwk6ZRZzI6DYmIOfwJocM5ceR9TEPXIFjB906VCmMZV0nD/fk2U2TM5T62/O+h12ZFzsm+zsG4Pmq101hDE9V0v9dTXT2EDbYPfEQ/0SEz0GUSIZicRQoAoH7/FkLV43K6bMq/KuZZ8Wb0DOSm+UplF9BfvUcilwk7SAAWqoXg+vTEY4VtX6J4qv1911ydYK/X0+2Y+eGtRsUb14HV+7LM4ZTfnYt6CyStzDdCf9EiH8fpCjNdOzC1ShfQUn+3FZarEh8A/j2OSnnpI+tWkDLm/A1bKOgUmTtNI8fp+umFgJUGY5dtrrvXC9tIbaFX72Xn6ZiHymNxq1Q==";
+var ITER = 250000;
+
+function normalizar(s){
+  return String(s).toLowerCase().normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+}
+
+function abrirCaja(palabra){
+  var bin = atob(CIFRADO);
+  var todo = new Uint8Array(bin.length);
+  for (var n = 0; n < bin.length; n++) todo[n] = bin.charCodeAt(n);
+  var salt = todo.slice(0, 16), iv = todo.slice(16, 28), cuerpo = todo.slice(28);
+  var enc = new TextEncoder();
+  return crypto.subtle.importKey("raw", enc.encode(normalizar(palabra)), "PBKDF2", false, ["deriveKey"])
+    .then(function(base){
+      return crypto.subtle.deriveKey(
+        { name:"PBKDF2", salt:salt, iterations:ITER, hash:"SHA-256" },
+        base, { name:"AES-GCM", length:256 }, false, ["decrypt"]);
+    })
+    .then(function(k){ return crypto.subtle.decrypt({ name:"AES-GCM", iv:iv }, k, cuerpo); })
+    .then(function(claro){ return JSON.parse(new TextDecoder("utf-8").decode(claro)); });
 }
 
 try { resp = JSON.parse(localStorage.getItem(LLAVE_R) || "{}") || {}; } catch(e){ resp = {}; }
 try { pre  = JSON.parse(localStorage.getItem(LLAVE_P) || "{}") || {}; } catch(e){ pre = {}; }
-
-var delEnlace = leerHash();
-if (delEnlace){
-  pre = delEnlace;
-  try { localStorage.setItem(LLAVE_P, JSON.stringify(pre)); } catch(e){}
-}
 
 function guardar(){ try { localStorage.setItem(LLAVE_R, JSON.stringify(resp)); } catch(e){} }
 
@@ -225,9 +229,44 @@ function esc(s){
 }
 
 function pintar(){
+  if (vista === "palabra") return pintarPalabra();
   if (vista === "inicio") return pintarInicio();
   if (vista === "repaso") return pintarRepaso();
   return pintarPregunta();
+}
+
+function pintarPalabra(){
+  barra.classList.add("oculto");
+  tarjeta.innerHTML =
+    '<h1>Datos para la visa</h1>' +
+    '<p>Escribe la palabra que te dio Oscar. Son tres palabras seguidas.</p>' +
+    '<input type="text" id="clave" placeholder="la palabra" autocapitalize="off" autocorrect="off" spellcheck="false">' +
+    '<p class="ayuda" id="aviso" style="margin-top:12px"></p>' +
+    '<div class="pie"><button class="btn principal" id="entrar">Entrar</button></div>';
+
+  var caja = document.getElementById("clave");
+  var aviso = document.getElementById("aviso");
+  var boton = document.getElementById("entrar");
+
+  function probar(){
+    var v = caja.value.trim();
+    if (!v) return;
+    boton.disabled = true;
+    boton.textContent = "Un momento...";
+    aviso.textContent = "";
+    abrirCaja(v).then(function(datos){
+      pre = datos;
+      try { localStorage.setItem(LLAVE_P, JSON.stringify(pre)); } catch(e){}
+      vista = "inicio"; pintar();
+    }, function(){
+      boton.disabled = false;
+      boton.textContent = "Entrar";
+      aviso.textContent = "Esa no es. Vuelve a preguntarle a Oscar y escríbela otra vez.";
+      caja.focus(); caja.select();
+    });
+  }
+  boton.onclick = probar;
+  caja.onkeydown = function(ev){ if (ev.key === "Enter"){ ev.preventDefault(); probar(); } };
 }
 
 function pintarInicio(){
@@ -423,6 +462,7 @@ function pintarRepaso(){
   };
 }
 
+vista = Object.keys(pre).length ? "inicio" : "palabra";
 pintar();
 })();
 </script>
