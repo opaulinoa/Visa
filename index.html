@@ -6,47 +6,31 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Datos para la visa</title>
 <style>
-  /* ===== Cambia este número por el tuyo, con prefijo del país y sin + ni espacios.
-     Si lo dejas vacío, WhatsApp le deja elegir a quién enviarlo. ===== */
-
   :root{
     color-scheme: light;
-    --bg:#EEF2F4;
-    --card:#FFFFFF;
-    --ink:#12212A;
-    --ink-2:#4E5D66;
+    --bg:#EEF2F4; --card:#FFFFFF;
+    --ink:#12212A; --ink-2:#4E5D66;
     --line:#D3DBDF;
-    --azul:#0F5673;
-    --azul-claro:#E3EFF5;
-    --verde:#137A4B;
-    --verde-claro:#E1F1E9;
+    --azul:#0F5673; --azul-claro:#E3EFF5;
+    --verde:#137A4B; --verde-claro:#E1F1E9;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{
-    background:var(--bg);
-    color:var(--ink);
+    background:var(--bg); color:var(--ink);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-    font-size:18px;
-    line-height:1.5;
-    -webkit-text-size-adjust:100%;
+    font-size:18px; line-height:1.5; -webkit-text-size-adjust:100%;
     padding-top:env(safe-area-inset-top,0px);
     padding-bottom:env(safe-area-inset-bottom,0px);
   }
   .wrap{max-width:620px;margin:0 auto;padding:20px 18px 48px}
 
-  /* barra de progreso */
-  .top{margin-bottom:22px}
+  .barra{margin-bottom:22px}
   .track{height:10px;background:#DCE4E8;border-radius:99px;overflow:hidden}
   .fill{height:100%;background:var(--azul);border-radius:99px;transition:width .25s ease}
   .cuenta{margin-top:8px;font-size:15px;color:var(--ink-2)}
 
-  .card{
-    background:var(--card);
-    border-radius:14px;
-    padding:24px 20px;
-    box-shadow:0 1px 3px rgba(18,33,42,.08);
-  }
+  .tarjeta{background:var(--card);border-radius:14px;padding:24px 20px;box-shadow:0 1px 3px rgba(18,33,42,.08)}
 
   h1{font-size:30px;line-height:1.2;margin:0 0 14px;text-wrap:balance}
   h2{font-size:25px;line-height:1.25;margin:0 0 10px;text-wrap:balance}
@@ -54,40 +38,40 @@
   .ayuda{color:var(--ink-2);font-size:16px;margin:-2px 0 18px}
   .intro li{margin-bottom:10px}
 
-  input[type=text], textarea{
-    width:100%;
-    font-family:inherit;
-    font-size:19px;
+  .dato{
+    background:var(--azul-claro);
+    border-left:5px solid var(--azul);
+    border-radius:0 10px 10px 0;
+    padding:16px 18px;
+    font-size:20px;
     line-height:1.45;
-    padding:14px;
-    border:2px solid var(--line);
-    border-radius:10px;
-    background:#FBFDFD;
-    color:var(--ink);
+    margin-bottom:18px;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+  }
+
+  input[type=text], textarea{
+    width:100%;font-family:inherit;font-size:19px;line-height:1.45;
+    padding:14px;border:2px solid var(--line);border-radius:10px;
+    background:#FBFDFD;color:var(--ink);
   }
   textarea{min-height:120px;resize:vertical}
   input[type=text]:focus, textarea:focus{border-color:var(--azul);outline:none}
 
   .opciones{display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
   .op{
-    display:block;width:100%;text-align:left;
-    font-family:inherit;font-size:19px;
-    padding:16px 18px;
-    border:2px solid var(--line);
-    border-radius:10px;
-    background:#FBFDFD;
-    color:var(--ink);
-    cursor:pointer;
+    display:block;width:100%;text-align:left;font-family:inherit;font-size:19px;
+    padding:16px 18px;border:2px solid var(--line);border-radius:10px;
+    background:#FBFDFD;color:var(--ink);cursor:pointer;
   }
   .op:hover{border-color:var(--azul)}
   .op.sel{border-color:var(--azul);background:var(--azul-claro)}
+  .op.si{background:var(--verde);border-color:var(--verde);color:#fff;font-weight:600;text-align:center}
+  .op.si:hover{background:#0F6A41;border-color:#0F6A41}
 
   .pie{display:flex;align-items:center;gap:12px;margin-top:22px}
-  .btn{
-    font-family:inherit;font-size:19px;font-weight:600;
-    padding:15px 24px;border-radius:10px;border:2px solid transparent;
-    cursor:pointer;min-height:54px;
-  }
+  .btn{font-family:inherit;font-size:19px;font-weight:600;padding:15px 24px;
+       border-radius:10px;border:2px solid transparent;cursor:pointer;min-height:54px}
   .btn.principal{background:var(--azul);color:#fff;flex:1}
   .btn.principal:hover{background:#0C455D}
   .btn.atras{background:none;border-color:var(--line);color:var(--ink-2);padding:15px 18px}
@@ -99,12 +83,12 @@
           font-family:inherit;font-size:16px;color:var(--ink-2);text-decoration:underline;cursor:pointer;padding:8px}
   :focus-visible{outline:3px solid var(--azul);outline-offset:2px}
 
-  /* repaso */
   .rep{border-top:1px solid var(--line);padding:14px 0}
   .rep:first-of-type{border-top:none}
   .rep .p{font-size:15px;color:var(--ink-2);margin:0 0 3px}
   .rep .r{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
   .rep .vacio{color:#8C9AA2;font-style:italic}
+  .rep .marca{font-size:14px;color:var(--verde);font-weight:600}
   .rep button{background:none;border:none;font-family:inherit;font-size:15px;color:var(--azul);
               text-decoration:underline;cursor:pointer;padding:4px 0}
   .aviso{background:var(--verde-claro);border-radius:10px;padding:16px 18px;margin-bottom:18px;font-size:17px}
@@ -116,121 +100,123 @@
 </head>
 <body>
 <div class="wrap">
-
-  <div class="top oculto" id="barra">
+  <div class="barra oculto" id="barra">
     <div class="track"><div class="fill" id="fill" style="width:0%"></div></div>
     <div class="cuenta" id="cuenta"></div>
   </div>
-
-  <div class="card" id="card"></div>
-
+  <div class="tarjeta" id="tarjeta"></div>
 </div>
 
 <script>
-/* ===================================================================
-   Pon aquí tu número de WhatsApp: país + número, sin + ni espacios.
-   Ejemplo España: "34612345678".  Déjalo como "" y ella elige el chat.
-   =================================================================== */
+(function(){
+"use strict";
+
+/* Tu WhatsApp: pais + numero, sin + ni espacios. "" = ella elige el chat. */
 var TELEFONO = "34632438175";
 
-var PREGUNTAS = [
-  { id:"civil", q:"¿Cuál es tu estado civil?", tipo:"opcion",
-    opts:["Casada","Viuda","Divorciada","Soltera"] },
-
-  { id:"esposo", q:"Datos de tu esposo", tipo:"largo",
+var PREG = [
+  { id:"nombre",   q:"Tu nombre como aparece en el pasaporte" },
+  { id:"soltera",  q:"Tu apellido de soltera", ayuda:"Como aparece en tu acta de nacimiento." },
+  { id:"fnac",     q:"Tu fecha de nacimiento" },
+  { id:"lugar",    q:"Dónde naciste" },
+  { id:"cedula",   q:"Tu cédula" },
+  { id:"civil",    q:"¿Cuál es tu estado civil?", tipo:"opcion", opts:["Casada","Viuda","Divorciada","Soltera"] },
+  { id:"esposo",   q:"Datos de tu esposo", tipo:"largo",
     ayuda:"Nombre completo, fecha de nacimiento, dónde nació y su nacionalidad.",
     siSolo:{ id:"civil", vale:["Casada"] } },
 
   { id:"direccion", q:"¿Cuál es la dirección de tu casa?", tipo:"largo",
     ayuda:"Calle y número, sector, ciudad y provincia. Completa, como en una carta." },
+  { id:"celular",   q:"¿Cuál es tu número de celular?", ayuda:"El tuyo personal, no el del colegio." },
+  { id:"teltrabajo",q:"El teléfono del colegio donde trabajas" },
+  { id:"correo",    q:"Tu correo personal" },
+  { id:"correo2",   q:"Tu correo del Ministerio" },
+  { id:"facebook",  q:"Tu Facebook" },
+  { id:"instagram", q:"Tu Instagram" },
+  { id:"tiktok",    q:"¿Tienes TikTok?", tipo:"opcion", opts:["No tengo","Sí"] },
+  { id:"tiktokuser",q:"¿Cuál es tu usuario de TikTok?", siSolo:{ id:"tiktok", vale:["Sí"] } },
 
-  { id:"celular", q:"¿Cuál es tu número de celular?", tipo:"texto",
-    ayuda:"El tuyo personal, no el del colegio." },
+  { id:"pasaporte", q:"Tu pasaporte nuevo", ayuda:"Si algo no cuadra con el que tienes en la mano, corrígelo." },
+  { id:"visa",      q:"Tu visa actual" },
 
-  { id:"papa", q:"¿Cómo se llama tu papá?", tipo:"texto",
-    ayuda:"Nombre y apellidos completos, tal como aparecen en el acta." },
+  { id:"papa",      q:"¿Cómo se llama tu papá?", ayuda:"Nombre y apellidos completos, como en el acta." },
+  { id:"papafnac",  q:"La fecha de nacimiento de tu papá" },
+  { id:"mama",      q:"¿Cómo se llama tu mamá?", ayuda:"Nombre y apellidos completos." },
+  { id:"mamafnac",  q:"La fecha de nacimiento de tu mamá" },
+  { id:"padresus",  q:"¿Alguno de tus padres vive en Estados Unidos?", tipo:"opcion", opts:["No","Sí"] },
+  { id:"familiaus", q:"¿Tienes hijos, hermanos o esposo viviendo en Estados Unidos?", tipo:"opcion", opts:["No","Sí"] },
+  { id:"familiausq",q:"¿Quiénes y qué son tuyos?", tipo:"largo", ayuda:"Nombre y parentesco de cada uno.",
+    siSolo:{ id:"familiaus", vale:["Sí"] } },
+  { id:"primo",     q:"Tu familiar en Estados Unidos", ayuda:"Es a quien pondríamos como contacto allá." },
+  { id:"alojamiento", q:"¿Te quedarías en su casa?", tipo:"opcion", opts:["Sí, en su casa","No, en otro sitio"] },
 
-  { id:"mama", q:"¿Cómo se llama tu mamá?", tipo:"texto",
-    ayuda:"Nombre y apellidos completos." },
-
-  { id:"padres_us", q:"¿Alguno de tus padres vive en Estados Unidos?", tipo:"opcion",
-    opts:["No","Sí"] },
-
-  { id:"familia_us", q:"¿Tienes hijos, hermanos o esposo viviendo en Estados Unidos?", tipo:"opcion",
-    opts:["No","Sí"] },
-
-  { id:"familia_us_quien", q:"¿Quiénes y qué son tuyos?", tipo:"largo",
-    ayuda:"Nombre y parentesco de cada uno.",
-    siSolo:{ id:"familia_us", vale:["Sí"] } },
-
-  { id:"desde", q:"¿Desde cuándo trabajas en el colegio donde estás ahora?", tipo:"texto",
-    ayuda:"Mes y año. Si no te acuerdas del mes, con el año basta." },
-
-  { id:"sueldo", q:"¿Cuánto ganas al mes?", tipo:"texto",
-    ayuda:"En pesos. Aproximado está bien." },
-
+  { id:"centro",    q:"Dónde trabajas ahora" },
+  { id:"cargo",     q:"Tu cargo" },
+  { id:"desde",     q:"¿Desde cuándo trabajas ahí?", ayuda:"Mes y año. Si no recuerdas el mes, con el año basta." },
+  { id:"sueldo",    q:"¿Cuánto ganas al mes?", ayuda:"En pesos. Aproximado está bien." },
   { id:"funciones", q:"¿Qué haces en tu puesto?", tipo:"largo",
     ayuda:"Dos o tres líneas: qué supervisas, qué coordinas, de qué te encargas." },
-
-  { id:"anteriores", q:"¿En qué colegios trabajaste antes?", tipo:"largo",
+  { id:"minerva",   q:"El colegio donde trabajabas antes", ayuda:"Si las fechas no están bien, corrígelas." },
+  { id:"anteriores",q:"¿En qué otros colegios trabajaste?", tipo:"largo",
     ayuda:"De cada uno: el nombre, qué hacías y de qué año a qué año." },
-
-  { id:"estudios", q:"¿Dónde estudiaste?", tipo:"largo",
+  { id:"estudios",  q:"¿Dónde estudiaste?", tipo:"largo",
     ayuda:"Desde la secundaria en adelante. De cada centro: el nombre, la ciudad, qué estudiaste y de qué año a qué año." },
+  { id:"cv",        q:"¿Tienes un currículum actualizado?", tipo:"opcion",
+    ayuda:"Si lo tienes, te ahorra las dos preguntas de arriba.", opts:["Sí, lo tengo","No tengo"] },
 
-  { id:"cv", q:"¿Tienes un currículum actualizado?", tipo:"opcion",
-    ayuda:"Si lo tienes, te ahorra las dos preguntas de arriba.",
-    opts:["Sí, lo tengo","No tengo"] },
-
-  { id:"tiktok", q:"¿Tienes TikTok?", tipo:"opcion",
-    opts:["No tengo","Sí"] },
-
-  { id:"tiktok_user", q:"¿Cuál es tu usuario de TikTok?", tipo:"texto",
-    siSolo:{ id:"tiktok", vale:["Sí"] } },
-
-  { id:"paises", q:"¿Has viajado a algún otro país desde el año 2021?", tipo:"largo",
+  { id:"viajes",    q:"Tus viajes a Estados Unidos", tipo:"largo",
+    ayuda:"Si falta alguno, o te quedaste más o menos tiempo del que dice, corrígelo." },
+  { id:"paises",    q:"¿Has viajado a algún otro país desde el año 2021?", tipo:"largo",
     ayuda:"Escribe cuáles. Si no has salido del país, pon «Ninguno»." },
-
-  { id:"organizaciones", q:"¿Perteneces a alguna iglesia, asociación de maestros o grupo parecido?", tipo:"largo",
+  { id:"orgs",      q:"¿Perteneces a alguna iglesia, asociación de maestros o grupo parecido?", tipo:"largo",
     ayuda:"El nombre de cada una. Si no, pon «Ninguna»." },
-
-  { id:"viajes", q:"En tus viajes a Estados Unidos, ¿cuánto tiempo te quedaste cada vez?", tipo:"largo",
-    ayuda:"Fuiste en diciembre de 2016, en junio de 2017 y en octubre de 2019. Aproximado está bien." },
-
-  { id:"negada", q:"¿Alguna vez te han negado una visa o la entrada a Estados Unidos?", tipo:"opcion",
-    ayuda:"Esta hay que responderla exacta, aunque haya sido hace muchos años.",
-    opts:["No, nunca","Sí"] },
-
-  { id:"peticion", q:"¿Alguien ha metido una petición de residencia o inmigrante por ti?", tipo:"opcion",
+  { id:"negada",    q:"¿Alguna vez te han negado una visa o la entrada a Estados Unidos?", tipo:"opcion",
+    ayuda:"Esta hay que responderla exacta, aunque haya sido hace muchos años.", opts:["No, nunca","Sí"] },
+  { id:"peticion",  q:"¿Alguien ha metido una petición de residencia o inmigrante por ti?", tipo:"opcion",
     opts:["No","Sí","No estoy segura"] },
-
-  { id:"cuando", q:"¿Cuándo piensas viajar y por cuánto tiempo?", tipo:"texto",
+  { id:"cuando",    q:"¿Cuándo piensas viajar y por cuánto tiempo?",
     ayuda:"Un mes aproximado basta. Si aún no lo sabes, pon «No lo sé todavía»." },
-
-  { id:"paga", q:"¿Quién pagaría el viaje?", tipo:"opcion",
-    opts:["Yo misma","Oscar","Otra persona"] }
+  { id:"paga",      q:"¿Quién pagaría el viaje?", tipo:"opcion", opts:["Yo misma","Oscar","Otra persona"] }
 ];
 
-var CLAVE = "visa-respuestas-v1";
-var resp = {};
-try { resp = JSON.parse(localStorage.getItem(CLAVE) || "{}") || {}; } catch(e){ resp = {}; }
+var LLAVE_R = "visa-respuestas-v2";
+var LLAVE_P = "visa-previos-v2";
+var pre = {}, resp = {};
 
-function guardar(){
-  try { localStorage.setItem(CLAVE, JSON.stringify(resp)); } catch(e){}
+function leerHash(){
+  var h = (window.location.hash || "").replace(/^#/, "");
+  if (h.indexOf("d=") === 0) h = h.slice(2);
+  if (!h) return null;
+  try {
+    var b64 = h.replace(/-/g, "+").replace(/_/g, "/");
+    while (b64.length % 4) b64 += "=";
+    var bin = atob(b64);
+    var bytes = new Uint8Array(bin.length);
+    for (var n = 0; n < bin.length; n++) bytes[n] = bin.charCodeAt(n);
+    return JSON.parse(new TextDecoder("utf-8").decode(bytes));
+  } catch(e){ return null; }
 }
+
+try { resp = JSON.parse(localStorage.getItem(LLAVE_R) || "{}") || {}; } catch(e){ resp = {}; }
+try { pre  = JSON.parse(localStorage.getItem(LLAVE_P) || "{}") || {}; } catch(e){ pre = {}; }
+
+var delEnlace = leerHash();
+if (delEnlace){
+  pre = delEnlace;
+  try { localStorage.setItem(LLAVE_P, JSON.stringify(pre)); } catch(e){}
+}
+
+function guardar(){ try { localStorage.setItem(LLAVE_R, JSON.stringify(resp)); } catch(e){} }
 
 function activa(p){
   if (!p.siSolo) return true;
   return p.siSolo.vale.indexOf(resp[p.siSolo.id]) !== -1;
 }
-function lista(){ return PREGUNTAS.filter(activa); }
+function lista(){ return PREG.filter(activa); }
 
-var vista = "inicio";   // inicio | pregunta | repaso
-var i = 0;
-var volverARepaso = false;
-
-var card = document.getElementById("card");
-var barra = document.getElementById("barra");
+var vista = "inicio", i = 0, volver = false;
+var tarjeta = document.getElementById("tarjeta");
+var barra   = document.getElementById("barra");
 
 function esc(s){
   return String(s).replace(/[&<>"]/g, function(c){
@@ -239,18 +225,20 @@ function esc(s){
 }
 
 function pintar(){
-  if (vista === "inicio")  return pintarInicio();
-  if (vista === "repaso")  return pintarRepaso();
+  if (vista === "inicio") return pintarInicio();
+  if (vista === "repaso") return pintarRepaso();
   return pintarPregunta();
 }
 
 function pintarInicio(){
   barra.classList.add("oculto");
   var hechas = lista().filter(function(p){ return resp[p.id]; }).length;
-  card.innerHTML =
+  var conDatos = Object.keys(pre).length > 0;
+  tarjeta.innerHTML =
     '<h1>Datos para la visa</h1>' +
-    '<p>Son unas cuantas preguntas cortas. Se contestan de una en una y no hay que apurarse.</p>' +
+    '<p>Son preguntas cortas, de una en una. No hay que apurarse.</p>' +
     '<ul class="intro">' +
+      (conDatos ? '<li>En varias ya verás el dato escrito. Solo tienes que mirarlo y decir si está bien, o corregirlo.</li>' : '') +
       '<li>Si no sabes alguna, toca <b>No lo sé</b> y sigue.</li>' +
       '<li>Se va guardando sola. Puedes cerrar y volver después.</li>' +
       '<li>Al final sale un botón para mandárselo todo a Oscar por WhatsApp.</li>' +
@@ -260,12 +248,10 @@ function pintarInicio(){
     (hechas ? '<button class="saltar" id="verepaso">Ver lo que ya contesté</button>' : '');
 
   document.getElementById("empezar").onclick = function(){
-    var L = lista();
-    var pendiente = -1;
-    for (var n = 0; n < L.length; n++){ if (!resp[L[n].id]){ pendiente = n; break; } }
-    if (pendiente === -1){ vista = "repaso"; return pintar(); }
-    i = pendiente;
-    vista = "pregunta"; pintar();
+    var L = lista(), pend = -1;
+    for (var n = 0; n < L.length; n++){ if (!resp[L[n].id]){ pend = n; break; } }
+    if (pend === -1){ vista = "repaso"; return pintar(); }
+    i = pend; vista = "pregunta"; pintar();
   };
   var vr = document.getElementById("verepaso");
   if (vr) vr.onclick = function(){ vista = "repaso"; pintar(); };
@@ -277,53 +263,59 @@ function pintarPregunta(){
   var p = L[i];
 
   barra.classList.remove("oculto");
-  document.getElementById("fill").style.width = ((i) / L.length * 100) + "%";
+  document.getElementById("fill").style.width = (i / L.length * 100) + "%";
   document.getElementById("cuenta").textContent = "Pregunta " + (i + 1) + " de " + L.length;
 
   var valor = resp[p.id] || "";
+  var enConfirmar = !!pre[p.id] && !valor && !p.editando;
+
   var html = '<h2>' + esc(p.q) + '</h2>';
   if (p.ayuda) html += '<p class="ayuda">' + esc(p.ayuda) + '</p>';
 
-  if (p.tipo === "opcion"){
+  if (enConfirmar){
+    html += '<div class="dato">' + esc(pre[p.id]) + '</div>' +
+            '<div class="opciones">' +
+              '<button class="op si" id="ok">Sí, está bien</button>' +
+              '<button class="op" id="corregir">No, hay que corregirlo</button>' +
+            '</div>' +
+            (i > 0 ? '<div class="pie"><button class="btn atras" id="atras">Atrás</button></div>' : '');
+  } else if (p.tipo === "opcion"){
     html += '<div class="opciones">';
     for (var n = 0; n < p.opts.length; n++){
-      var o = p.opts[n];
-      html += '<button class="op' + (valor === o ? ' sel' : '') + '" data-op="' + esc(o) + '">' + esc(o) + '</button>';
+      html += '<button class="op' + (valor === p.opts[n] ? ' sel' : '') + '" data-op="' + esc(p.opts[n]) + '">' + esc(p.opts[n]) + '</button>';
     }
-    html += '</div>';
-    html += '<div class="pie">' +
-              (i > 0 ? '<button class="btn atras" id="atras">Atrás</button>' : '') +
-            '</div>';
-  } else if (p.tipo === "largo"){
-    html += '<textarea id="campo" placeholder="Escribe aquí">' + esc(valor) + '</textarea>';
-    html += '<div class="pie">' +
-              (i > 0 ? '<button class="btn atras" id="atras">Atrás</button>' : '') +
-              '<button class="btn principal" id="siguiente">Siguiente</button>' +
-            '</div>';
+    html += '</div><div class="pie">' + (i > 0 ? '<button class="btn atras" id="atras">Atrás</button>' : '') + '</div>';
   } else {
-    html += '<input type="text" id="campo" value="' + esc(valor) + '" placeholder="Escribe aquí">';
+    var inicial = valor || (p.editando ? (pre[p.id] || "") : "");
+    if (p.tipo === "largo") html += '<textarea id="campo" placeholder="Escribe aquí">' + esc(inicial) + '</textarea>';
+    else html += '<input type="text" id="campo" value="' + esc(inicial) + '" placeholder="Escribe aquí">';
     html += '<div class="pie">' +
               (i > 0 ? '<button class="btn atras" id="atras">Atrás</button>' : '') +
               '<button class="btn principal" id="siguiente">Siguiente</button>' +
             '</div>';
   }
   html += '<button class="saltar" id="saltar">No lo sé, seguir</button>';
-  card.innerHTML = html;
+  tarjeta.innerHTML = html;
+
+  var ok = document.getElementById("ok");
+  if (ok) ok.onclick = function(){ resp[p.id] = pre[p.id]; guardar(); avanzar(); };
+  var corr = document.getElementById("corregir");
+  if (corr) corr.onclick = function(){ p.editando = true; pintar(); };
 
   var campo = document.getElementById("campo");
   if (campo){
     campo.oninput = function(){ resp[p.id] = campo.value; guardar(); };
     campo.onkeydown = function(ev){
-      if (ev.key === "Enter" && p.tipo !== "largo"){ ev.preventDefault(); avanzar(); }
+      if (ev.key === "Enter" && p.tipo !== "largo"){ ev.preventDefault(); guardarCampo(p); }
     };
   }
 
-  var ops = card.querySelectorAll(".op");
+  var ops = tarjeta.querySelectorAll(".op[data-op]");
   for (var m = 0; m < ops.length; m++){
     ops[m].onclick = function(){
       resp[p.id] = this.getAttribute("data-op");
       guardar();
-      var todas = card.querySelectorAll(".op");
+      var todas = tarjeta.querySelectorAll(".op[data-op]");
       for (var z = 0; z < todas.length; z++) todas[z].classList.remove("sel");
       this.classList.add("sel");
       setTimeout(avanzar, 220);
@@ -331,32 +323,48 @@ function pintarPregunta(){
   }
 
   var sig = document.getElementById("siguiente");
-  if (sig) sig.onclick = avanzar;
+  if (sig) sig.onclick = function(){ guardarCampo(p); };
   var atr = document.getElementById("atras");
-  if (atr) atr.onclick = function(){ if (i > 0){ i--; window.scrollTo(0,0); pintar(); } };
+  if (atr) atr.onclick = function(){ p.editando = false; if (i > 0){ i--; window.scrollTo(0,0); pintar(); } };
   document.getElementById("saltar").onclick = function(){
     if (!resp[p.id]) { resp[p.id] = "— no lo sé —"; guardar(); }
-    avanzar();
+    p.editando = false; avanzar();
   };
+}
+
+function guardarCampo(p){
+  var campo = document.getElementById("campo");
+  var v = campo ? campo.value.trim() : "";
+  if (!v) return;
+  resp[p.id] = v; guardar();
+  p.editando = false;
+  avanzar();
 }
 
 function avanzar(){
   window.scrollTo(0,0);
-  if (volverARepaso){ volverARepaso = false; vista = "repaso"; return pintar(); }
+  if (volver){ volver = false; vista = "repaso"; return pintar(); }
   i++;
-  if (i >= lista().length){ vista = "repaso"; }
+  if (i >= lista().length) vista = "repaso";
   pintar();
 }
 
+function confirmado(p){ return !!pre[p.id] && resp[p.id] === pre[p.id]; }
+
 function textoFinal(){
   var L = lista();
-  var t = ["Datos para la visa:", ""];
+  var nuevos = [], iguales = [];
   for (var n = 0; n < L.length; n++){
-    var p = L[n];
-    var r = resp[p.id];
+    var p = L[n], r = resp[p.id];
     if (!r) continue;
-    t.push(p.q);
-    t.push(r);
+    if (confirmado(p)) iguales.push(p.q);
+    else { nuevos.push(p.q); nuevos.push(r); nuevos.push(""); }
+  }
+  var t = ["Datos para la visa:", ""];
+  if (nuevos.length){ t.push("LO QUE CONTESTÉ Y LO QUE CORREGÍ:", ""); t = t.concat(nuevos); }
+  if (iguales.length){
+    t.push("ESTO LO REVISÉ Y ESTÁ BIEN:");
+    for (var k = 0; k < iguales.length; k++) t.push("- " + iguales[k]);
     t.push("");
   }
   if (resp.cv === "Sí, lo tengo") t.push("(Te mando también el currículum por aquí.)");
@@ -374,39 +382,35 @@ function pintarRepaso(){
   for (var n = 0; n < L.length; n++){
     var p = L[n], r = resp[p.id];
     html += '<div class="rep">' +
-              '<p class="p">' + esc(p.q) + '</p>' +
+              '<p class="p">' + esc(p.q) + (confirmado(p) ? ' <span class="marca">revisado</span>' : '') + '</p>' +
               '<p class="r' + (r ? '' : ' vacio') + '">' + esc(r || "sin contestar") + '</p>' +
               '<button data-ir="' + n + '">Cambiar</button>' +
             '</div>';
   }
-
   if (resp.cv === "Sí, lo tengo"){
     html += '<div class="aviso" style="margin-top:20px"><b>No olvides el currículum</b>' +
-            'Mándaselo a Oscar por aquí mismo, en PDF o en fotos de cada página. De ahí salen los estudios y los colegios con sus fechas.</div>';
+            'Mándaselo a Oscar por aquí mismo, en PDF o en fotos de cada página.</div>';
   }
-
   html += '<div style="margin-top:22px">' +
             '<button class="btn verde" id="enviar">Mandárselo a Oscar por WhatsApp</button>' +
             '<button class="btn gris" id="copiar">Copiar el texto</button>' +
           '</div>' +
           '<textarea class="copia oculto" id="areacopia" readonly></textarea>';
+  tarjeta.innerHTML = html;
 
-  card.innerHTML = html;
-
-  var bs = card.querySelectorAll("[data-ir]");
+  var bs = tarjeta.querySelectorAll("[data-ir]");
   for (var m = 0; m < bs.length; m++){
     bs[m].onclick = function(){
       i = parseInt(this.getAttribute("data-ir"), 10);
-      volverARepaso = true;
-      vista = "pregunta"; window.scrollTo(0,0); pintar();
+      var pp = lista()[i];
+      if (pp && pre[pp.id]) pp.editando = true;
+      volver = true; vista = "pregunta"; window.scrollTo(0,0); pintar();
     };
   }
 
   document.getElementById("enviar").onclick = function(){
-    var url = "https://wa.me/" + TELEFONO + "?text=" + encodeURIComponent(textoFinal());
-    window.location.href = url;
+    window.location.href = "https://wa.me/" + TELEFONO + "?text=" + encodeURIComponent(textoFinal());
   };
-
   document.getElementById("copiar").onclick = function(){
     var area = document.getElementById("areacopia");
     area.value = textoFinal();
@@ -415,13 +419,12 @@ function pintarRepaso(){
       navigator.clipboard.writeText(area.value).then(function(){
         document.getElementById("copiar").textContent = "Copiado";
       }, function(){ area.focus(); area.select(); });
-    } else {
-      area.focus(); area.select();
-    }
+    } else { area.focus(); area.select(); }
   };
 }
 
 pintar();
+})();
 </script>
 </body>
 </html>
