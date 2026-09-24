@@ -334,7 +334,12 @@ function pintarPregunta(){
             '</div>';
   }
   html += '<button class="saltar" id="saltar">No lo sé, seguir</button>';
+  var yaVan = lista().filter(function(q){ return resp[q.id]; }).length;
+  if (yaVan >= 3) html += '<button class="saltar" id="mandarya">Mandarle a Oscar lo que llevo</button>';
   tarjeta.innerHTML = html;
+
+  var my = document.getElementById("mandarya");
+  if (my) my.onclick = function(){ p.editando = false; vista = "repaso"; window.scrollTo(0,0); pintar(); };
 
   var ok = document.getElementById("ok");
   if (ok) ok.onclick = function(){ resp[p.id] = pre[p.id]; guardar(); avanzar(); };
@@ -399,7 +404,9 @@ function textoFinal(){
     if (confirmado(p)) iguales.push(p.q);
     else { nuevos.push(p.q); nuevos.push(r); nuevos.push(""); }
   }
+  var pendientes = L.filter(function(q){ return !resp[q.id]; }).length;
   var t = ["Datos para la visa:", ""];
+  if (pendientes) t.push("(Voy por la mitad, me faltan " + pendientes + ". Sigo luego.)", "");
   if (nuevos.length){ t.push("LO QUE CONTESTÉ Y LO QUE CORREGÍ:", ""); t = t.concat(nuevos); }
   if (iguales.length){
     t.push("ESTO LO REVISÉ Y ESTÁ BIEN:");
@@ -416,8 +423,10 @@ function pintarRepaso(){
   document.getElementById("cuenta").textContent = "Ya están todas";
 
   var L = lista();
+  var faltan = L.filter(function(q){ return !resp[q.id]; }).length;
   var html = '<h2>Repasa antes de mandarlo</h2>' +
-             '<p class="ayuda">Toca «Cambiar» en cualquiera si quieres corregirla.</p>';
+             '<p class="ayuda">Toca «Cambiar» en cualquiera si quieres corregirla.</p>' +
+             (faltan ? '<div class="aviso"><b>Te faltan ' + faltan + '</b>Puedes mandarle a Oscar lo que llevas ahora y terminar el resto después. Nada se pierde.</div>' : '');
   for (var n = 0; n < L.length; n++){
     var p = L[n], r = resp[p.id];
     html += '<div class="rep">' +
@@ -432,6 +441,7 @@ function pintarRepaso(){
   }
   html += '<div style="margin-top:22px">' +
             '<button class="btn verde" id="enviar">Mandárselo a Oscar por WhatsApp</button>' +
+            (faltan ? '<button class="btn gris" id="seguir">Seguir con las que faltan</button>' : '') +
             '<button class="btn gris" id="copiar">Copiar el texto</button>' +
           '</div>' +
           '<textarea class="copia oculto" id="areacopia" readonly></textarea>';
@@ -446,6 +456,13 @@ function pintarRepaso(){
       volver = true; vista = "pregunta"; window.scrollTo(0,0); pintar();
     };
   }
+
+  var seg = document.getElementById("seguir");
+  if (seg) seg.onclick = function(){
+    var LL = lista();
+    for (var q = 0; q < LL.length; q++){ if (!resp[LL[q].id]){ i = q; break; } }
+    volver = false; vista = "pregunta"; window.scrollTo(0,0); pintar();
+  };
 
   document.getElementById("enviar").onclick = function(){
     window.location.href = "https://wa.me/" + TELEFONO + "?text=" + encodeURIComponent(textoFinal());
