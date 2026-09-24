@@ -117,7 +117,7 @@
 <body>
 <div class="wrap">
 
-  <div class="top oculto" id="top">
+  <div class="top oculto" id="barra">
     <div class="track"><div class="fill" id="fill" style="width:0%"></div></div>
     <div class="cuenta" id="cuenta"></div>
   </div>
@@ -227,9 +227,10 @@ function lista(){ return PREGUNTAS.filter(activa); }
 
 var vista = "inicio";   // inicio | pregunta | repaso
 var i = 0;
+var volverARepaso = false;
 
 var card = document.getElementById("card");
-var top  = document.getElementById("top");
+var barra = document.getElementById("barra");
 
 function esc(s){
   return String(s).replace(/[&<>"]/g, function(c){
@@ -244,7 +245,7 @@ function pintar(){
 }
 
 function pintarInicio(){
-  top.classList.add("oculto");
+  barra.classList.add("oculto");
   var hechas = lista().filter(function(p){ return resp[p.id]; }).length;
   card.innerHTML =
     '<h1>Datos para la visa</h1>' +
@@ -260,8 +261,10 @@ function pintarInicio(){
 
   document.getElementById("empezar").onclick = function(){
     var L = lista();
-    i = 0;
-    for (var n = 0; n < L.length; n++){ if (!resp[L[n].id]){ i = n; break; } }
+    var pendiente = -1;
+    for (var n = 0; n < L.length; n++){ if (!resp[L[n].id]){ pendiente = n; break; } }
+    if (pendiente === -1){ vista = "repaso"; return pintar(); }
+    i = pendiente;
     vista = "pregunta"; pintar();
   };
   var vr = document.getElementById("verepaso");
@@ -273,7 +276,7 @@ function pintarPregunta(){
   if (i >= L.length){ vista = "repaso"; return pintar(); }
   var p = L[i];
 
-  top.classList.remove("oculto");
+  barra.classList.remove("oculto");
   document.getElementById("fill").style.width = ((i) / L.length * 100) + "%";
   document.getElementById("cuenta").textContent = "Pregunta " + (i + 1) + " de " + L.length;
 
@@ -338,8 +341,9 @@ function pintarPregunta(){
 }
 
 function avanzar(){
-  i++;
   window.scrollTo(0,0);
+  if (volverARepaso){ volverARepaso = false; vista = "repaso"; return pintar(); }
+  i++;
   if (i >= lista().length){ vista = "repaso"; }
   pintar();
 }
@@ -360,7 +364,7 @@ function textoFinal(){
 }
 
 function pintarRepaso(){
-  top.classList.remove("oculto");
+  barra.classList.remove("oculto");
   document.getElementById("fill").style.width = "100%";
   document.getElementById("cuenta").textContent = "Ya están todas";
 
@@ -393,6 +397,7 @@ function pintarRepaso(){
   for (var m = 0; m < bs.length; m++){
     bs[m].onclick = function(){
       i = parseInt(this.getAttribute("data-ir"), 10);
+      volverARepaso = true;
       vista = "pregunta"; window.scrollTo(0,0); pintar();
     };
   }
